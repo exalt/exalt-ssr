@@ -1,0 +1,48 @@
+{
+    "name": "@exalt/ssr",
+    "version": "0.1.0",
+    "publishConfig": {
+        "access": "public"
+    },
+    "description": "A module to render web components on the server",
+    "main": "dist/index.js",
+    "types": "types/ssr.d.ts",
+    "scripts": {
+        "build": "rollup -c",
+        "lint": "eslint src",
+        "prepublishOnly": "npm run lint && npm run build"
+    },
+    "keywords": [
+        "exalt",
+        "ssr",
+        "ssg",
+        "web components"
+    ],
+    "files": [
+        "dist",
+        "types"
+    ],
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/exalt/exalt-ssr.git"
+    },
+    "bugs": {
+        "url": "https://github.com/exalt/exalt-ssr/issues"
+    },
+    "homepage": "https://github.com/exalt/exalt-ssr#readme",
+    "author": "Outwalk Studios <support@outwalkstudios.com> (https://www.outwalkstudios.com/)",
+    "license": "MIT",
+    "devDependencies": {
+        "@babel/core": "^7.14.3",
+        "@babel/eslint-parser": "^7.14.4",
+        "@rollup/plugin-commonjs": "^19.0.0",
+        "@rollup/plugin-node-resolve": "^13.0.0",
+        "esbuild": "^0.12.6",
+        "eslint": "^7.28.0",
+        "rollup": "^2.51.0",
+        "rollup-plugin-esbuild": "^4.5.0"
+    },
+    "dependencies": {
+        "parse5": "^6.0.1"
+    }
+}
