@@ -21,12 +21,13 @@ export function renderToString(node, callback) {
 
 /* load a bundle using the esm package to support esm modules */
 export function loadBundle(path) {
+    initializeEnv();
     const loadModule = require("esm")(module);
     return loadModule(path);
 }
 
 /* initialize the DOM environment by patching the globals with DOM apis */
-export function initializeEnv() {
+function initializeEnv() {
     global.window = global;
 
     window.location = new Location();
@@ -67,8 +68,6 @@ export function initializeEnv() {
     document.dispatchEvent(new Event("DOMContentLoaded"));
     document.readyState = "complete";
     window.dispatchEvent(new Event("load"));
-
-    return { window, document: window.document };
 }
 
 /* serialize a node into a string */
