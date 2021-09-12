@@ -5,17 +5,14 @@ import { dependencies } from "./package.json";
 import { builtinModules } from "module";
 
 export default {
-    input: {
-        index: "src/index.js",
-        env: "src/env.js"
-    },
-    output: { dir: "dist", format: "cjs", banner: "/* Copyright (c) 2021 Outwalk Studios */" },
+    input: "src/index.js",
+    output: { file: "dist/index.js", format: "cjs", banner: "/* Copyright (c) Outwalk Studios */" },
     plugins: [
         resolve(),
         commonjs(),
         esbuild({
-            minify: true,
-            target: "es2015"
+            target: "es2015",
+            minify: true
         })
     ],
     external: Object.keys(dependencies).concat(builtinModules)
