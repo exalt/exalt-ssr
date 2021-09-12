@@ -30,6 +30,6 @@ export function each(node, call) {
 
 export function createAttributeFilter(namespace, name) {
     return (node) => {
-        (node.ns == namespace) && (node.localName.toLowerCase() == name.toLowerCase());
+        return (node.ns == namespace) && (node.localName.toLowerCase() == name.toLowerCase());
     };
 }

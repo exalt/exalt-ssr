@@ -41,16 +41,15 @@ function initializeEnv() {
     window.cancelAnimationFrame = (id) => clearTimeout(id);
     window.scrollTo = () => {};
     window.customElements = new CustomElementRegistry();
-    window.document = new Document(),
 
-    window = {
-        ...window,
+    window = Object.assign(window, {
+        document: new Document(),
         Document,
         Node,
         Text,
         Element,
-        HTMLElement: Element,
         SVGElement: Element,
+        HTMLElement: Element,
         Event,
         CustomEvent: Event,
         ClassList,
@@ -58,9 +57,9 @@ function initializeEnv() {
         CSSStyleSheet,
         CustomElementRegistry,
         DocumentFragment
-    };
+    });
 
-    for(let i in global.window) {
+    for (let i in global.window) {
         global[i] = global.window[i];
     }
 

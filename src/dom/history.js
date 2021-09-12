@@ -5,7 +5,6 @@ export class History {
     constructor() {
         this._history = [];
         this.index = 0;
-        this.state = null;
         this.pushState(null, null, "/");
     }
 

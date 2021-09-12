@@ -199,7 +199,7 @@ export class Element extends Node {
 
     /* set an attribute with a namespace on the element */
     setAttributeNS(namespace, name, value) {
-        const observedAttributes = this.constructor.observedAttributes ?? [];
+        const observedAttributes = this.constructor.observedAttributes || [];
         const oldValue = this.getAttribute(name);
 
         let attribute = findWhere(this.attributes, createAttributeFilter(namespace, name), false, false);
@@ -221,7 +221,7 @@ export class Element extends Node {
 
     /* check if the element has a namespaced attribute */
     hasAttributeNS(namespace, name) {
-        return this.getAttributeNS(namespace, name) != null;
+        return (this.getAttributeNS(namespace, name) != null);
     }
 
     /* remove a namespaced attribute from the element */
@@ -342,14 +342,18 @@ function createNodeFromFragment(fragment) {
             node = document.createElement(nodeName);
 
             if (attrs) {
-                attrs.forEach(({ name, value }) => node.setAttribute(name, value));
+                attrs.forEach(({ name, value }) => {
+                    node.setAttribute(name, value);
+                });
             }
             break;
     }
 
     if (childNodes) {
         childNodes.forEach((child) => {
-            return node.appendChild(createNodeFromFragment(child));
+            node.appendChild(createNodeFromFragment(child));
         });
     }
+
+    return node;
 }
