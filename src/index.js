@@ -2,10 +2,14 @@ import { Document } from "./dom/document";
 import { Node } from "./dom/node";
 import { Text } from "./dom/text";
 import { Element } from "./dom/element";
+import { Event } from "./dom/event";
 import { ClassList } from "./dom/class-list";
 import { Comment } from "./dom/comment";
 import { CSSStyleSheet } from "./dom/css-style-sheet";
+import { CustomElementRegistry } from "./dom/custom-element-registry";
 import { DocumentFragment } from "./dom/document-fragment";
+import { Location } from "./dom/location";
+import { History } from "./dom/history";
 
 /* render a node to a string */
 export function renderToString(node, callback) {
@@ -25,6 +29,9 @@ export function loadBundle(path) {
 export function initializeEnv() {
     global.window = global;
 
+    window.location = new Location();
+    window.history = new History();
+
     window._handlers = {};
     window.addEventListener = Element.prototype.addEventListener.bind(window);
     window.removeEventListener = Element.prototype.addEventListener.bind(window);
@@ -32,19 +39,23 @@ export function initializeEnv() {
     window.requestAnimationFrame = (fn) => setTimeout(fn);
     window.cancelAnimationFrame = (id) => clearTimeout(id);
     window.scrollTo = () => {};
-    
+    window.customElements = new CustomElementRegistry();
+    window.document = new Document(),
+
     window = {
         ...window,
-        document: new Document(),
         Document,
         Node,
         Text,
         Element,
         HTMLElement: Element,
         SVGElement: Element,
+        Event,
+        CustomEvent: Event,
         ClassList,
         Comment,
         CSSStyleSheet,
+        CustomElementRegistry,
         DocumentFragment
     };
 
@@ -53,7 +64,9 @@ export function initializeEnv() {
     }
 
     document.readyState = "interactive";
+    document.dispatchEvent(new Event("DOMContentLoaded"));
     document.readyState = "complete";
+    window.dispatchEvent(new Event("load"));
 
     return { window, document: window.document };
 }
