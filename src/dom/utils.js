@@ -33,3 +33,17 @@ export function createAttributeFilter(namespace, name) {
         return (node.ns == namespace) && (node.localName.toLowerCase() == name.toLowerCase());
     };
 }
+
+export function find(root, call, options = {}) {
+    const tree = document.createTreeWalker(root);
+    const list =  options.one ? null : [];
+
+    while(tree.nextNode()) {
+        if(call(tree.currentNode)) {
+            if(options.one) return tree.currentNode;
+            list.push(tree.currentNode);
+        }
+    }
+
+    return list;
+}

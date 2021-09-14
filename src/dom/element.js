@@ -1,7 +1,7 @@
 import { Node } from "./node";
 import { ClassList } from "./class-list";
 import { CSSStyleSheet } from "./css-style-sheet";
-import { findWhere, splice, createAttributeFilter } from "./utils";
+import { findWhere, splice, createAttributeFilter, find } from "./utils";
 import { parseFragment } from "parse5";
 
 export class Element extends Node {
@@ -316,6 +316,32 @@ export class Element extends Node {
         }
 
         return shadowRoot;
+    }
+
+    querySelector(selector, options = { one: true }) {
+        /* find an id */
+        if(selector[0] == "#") {
+            return find(this, (node) => node.getAttribute("id") == selector.slice(1), options);
+        }
+
+        /* find a class */
+        else if (selector[0] == ".") {
+            return find(this, (node) => node.getAttribute("class").includes(selector.slice(1)), options);
+        }
+
+        /* find an attribute */
+        else if(selector.startsWith("[") && selector.endsWith("]") && !selector.includes("=")) {
+            return find(this, (node) => node.hasAttribute(selector.slice(1, -1)), options);
+        }
+
+        /* try to find it as an element name */
+        else {
+            return find(this, (node) => node.nodeName.toLowerCase() == selector, options);
+        }
+    }
+
+    querySelectorAll(selector) {
+        return this.querySelector(selector, { one: false });
     }
 }
 
