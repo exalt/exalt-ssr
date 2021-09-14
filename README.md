@@ -22,13 +22,15 @@ npm install @exalt/ssr
 
 @exalt/ssr provides 2 functions to render web components on the server.
 
-- `loadBundle` - initalizes the DOM environment and loads the application bundle.
-- `renderToString` - renders a component to a string.
+- `loadBundle(path)` - initalizes the DOM environment and loads the application bundle.
+- `renderToString(component, callback)` - renders a component to a string.
 
-The DOM environment provided is a subset of the actual DOM apis and is designed to render exalt components,
+The DOM environment provided is a subset of the DOM spec and is designed to render exalt components,
 however as long as the required apis are provided any web component can be rendered.
 
-**Example**
+When a shadow root is detected it will be rendered as a [declarative shadow root](https://web.dev/declarative-shadow-dom/).
+
+**Example - Rendering the app component**
 ```js
 import { loadBundle, renderToString } from "@exalt/ssr";
 import path from "path";
@@ -38,6 +40,22 @@ const bundlePath = path.join(process.cwd(), "dist", "index.js");
 /* loadBundle returns the bundle exports, in this case it returns the App component */
 const { App } = loadBundle(bundlePath);
 const html = renderToString(new App());
+
+console.log(html);
+```
+
+**Example - Rendering the app component with callback**
+```js
+import { loadBundle, renderToString } from "@exalt/ssr";
+import path from "path";
+
+const bundlePath = path.join(process.cwd(), "dist", "index.js");
+
+/* loadBundle returns the bundle exports, in this case it returns the App component */
+const { App } = loadBundle(bundlePath);
+const html = renderToString(new App(), (currentNode) => {
+    console.log(`Rendering: ${currentNode.nodeName}`);
+});
 
 console.log(html);
 ```
