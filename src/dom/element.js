@@ -318,6 +318,7 @@ export class Element extends Node {
         return shadowRoot;
     }
 
+    /* find a single element in the dom using a selector */
     querySelector(selector, options = { one: true }) {
         /* find an id */
         if(selector[0] == "#") {
@@ -340,8 +341,24 @@ export class Element extends Node {
         }
     }
 
+    /* find all elements in the dom that match the selector */
     querySelectorAll(selector) {
         return this.querySelector(selector, { one: false });
+    }
+
+    /* get an element from the dom that has the specified id */
+    getElementById(id) {
+        return find(this, (node) => node.getAttribute("id") == id, { one: true });
+    }
+
+    /* get the elements in the dom that have the specified className */
+    getElementsByClassName(className) {
+        return find(this, (node) => node.getAttribute("class").includes(className));
+    }
+    
+    /* get the elements that have the specified tagName */
+    getElementsByTagName(tagName) {
+        return find(this, (node) => node.nodeName.toLowerCase() == tagName);
     }
 }
 
