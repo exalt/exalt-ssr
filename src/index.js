@@ -14,8 +14,8 @@ import { History } from "./dom/history";
 /* render a node to a string */
 export function renderToString(node, callback) {
     /* delete the exalt component mount and unmount functions */
-    if(node.mount) delete node.mount;
-    if(node.unmount) delete node.unmount; 
+    if(typeof node.mount == "function") node.mount = () => {};
+    if(typeof node.unmount == "function") node.unmount = () => {}; 
 
     node.connectedCallback && node.connectedCallback();
     const str = serialize(node, callback);
