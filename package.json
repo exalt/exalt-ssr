@@ -1,6 +1,6 @@
 {
     "name": "@exalt/ssr",
-    "version": "0.1.5",
+    "version": "0.1.6",
     "publishConfig": {
         "access": "public"
     },
@@ -45,7 +45,6 @@
     },
     "dependencies": {
         "esm": "^3.2.25",
-        "node-fetch": "^2.6.5",
         "parse5": "^6.0.1"
     }
 }

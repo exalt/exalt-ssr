@@ -10,10 +10,13 @@ import { CustomElementRegistry } from "./dom/custom-element-registry";
 import { DocumentFragment } from "./dom/document-fragment";
 import { Location } from "./dom/location";
 import { History } from "./dom/history";
-import fetch from "node-fetch";
 
 /* render a node to a string */
 export function renderToString(node, callback) {
+    /* delete the exalt component mount and unmount functions */
+    if(node.mount) delete node.mount;
+    if(node.unmount) delete node.unmount; 
+
     node.connectedCallback && node.connectedCallback();
     const str = serialize(node, callback);
     node.disconnectedCallback && node.disconnectedCallback();
@@ -42,7 +45,6 @@ function initializeEnv() {
     window.cancelAnimationFrame = (id) => clearTimeout(id);
     window.scrollTo = () => {};
     window.customElements = new CustomElementRegistry();
-    window.fetch = fetch;
 
     window = Object.assign(window, {
         document: new Document(),
