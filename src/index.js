@@ -10,6 +10,7 @@ import { CustomElementRegistry } from "./dom/custom-element-registry";
 import { DocumentFragment } from "./dom/document-fragment";
 import { Location } from "./dom/location";
 import { History } from "./dom/history";
+import fetch from "node-fetch";
 
 /* render a node to a string */
 export function renderToString(node, callback) {
@@ -41,7 +42,7 @@ function initializeEnv() {
     window.cancelAnimationFrame = (id) => clearTimeout(id);
     window.scrollTo = () => {};
     window.customElements = new CustomElementRegistry();
-    window.fetch = (...args) => import("node-fetch").then(({default: fetch}) => fetch(...args));
+    window.fetch = fetch;
 
     window = Object.assign(window, {
         document: new Document(),
