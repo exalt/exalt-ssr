@@ -1,4 +1,3 @@
-import fetch from "node-fetch";
 import { Document } from "./dom/document";
 import { Node } from "./dom/node";
 import { Text } from "./dom/text";
@@ -42,7 +41,7 @@ function initializeEnv() {
     window.cancelAnimationFrame = (id) => clearTimeout(id);
     window.scrollTo = () => {};
     window.customElements = new CustomElementRegistry();
-    window.fetch = fetch;
+    window.fetch = (...args) => import("node-fetch").then(({default: fetch}) => fetch(...args));
 
     window = Object.assign(window, {
         document: new Document(),
