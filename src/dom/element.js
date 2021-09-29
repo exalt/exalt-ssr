@@ -360,6 +360,10 @@ export class Element extends Node {
     getElementsByTagName(tagName) {
         return find(this, (node) => node.nodeName.toLowerCase() == tagName);
     }
+
+    scrollIntoView() {
+        /* empty function to prevent errors (we cant scroll on server side anyway) */
+    }
 }
 
 /* create a node from a parsed fragment */
