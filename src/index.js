@@ -26,8 +26,8 @@ export function renderToString(node, callback) {
 /* load a bundle using the esm package to support esm modules */
 export function loadBundle(path) {
     initializeEnv();
-    const loadModule = require("esm")(module);
-    return loadModule(path);
+    require = require("esm")(module);
+    return require(path);
 }
 
 /* initialize the DOM environment by patching the globals with DOM apis */
