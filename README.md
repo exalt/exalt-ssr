@@ -1,5 +1,6 @@
 # Exalt SSR
 A module to render web components on the server.
+Full documentation is available [here](https://www.exaltjs.com/docs/#exalt-ssr)
 
 ![Actions](https://github.com/exalt/exalt-ssr/workflows/build/badge.svg)
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/exalt/exalt-ssr/blob/main/LICENSE)
