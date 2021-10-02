@@ -248,27 +248,21 @@ export class Element extends Node {
         let target = event.target = this;
         let cancelable = event.cancelable;
         let handler;
+        let i;
 
-        const shouldRun = (
-            event.bubbles &&
-            !(cancelable && event._stop) &&
-            (target = target.parentNode)
-        );
-
-        while (shouldRun) {
+        do {
             event.currentTarget = target;
             handler = target._handlers[event.type.toLowerCase()];
-
-            if (handler) {
-                for (let i = handler.length; i--;) {
-                    if ((handler.call(target, event) == false || event._end) && cancelable) {
+            if(handler) {
+                for(i=handler.length; i--;) {
+                    if((handler[i].call(target, event) == false || event._end) && cancelable) {
                         event.defaultPrevented = true;
                     }
                 }
             }
-        }
+        } while (event.bubbles && !(cancelable && event._stop) && (target = target.parentNode));
 
-        return (handler != null);
+        return handler != null;
     }
 
     /* get all the assigned nodes of a slot element */
