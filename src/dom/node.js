@@ -87,7 +87,23 @@ export class Node {
             if (ref) splice(this.childNodes, ref, newNode, true);
             else this.childNodes.push(newNode);
 
-            connectNode(newNode);
+            /*
+                In the future this would be preferable to make framework agnostic but unforunately this
+                is required to prevent errors being thrown for unprocessed props. This might be solvable by changing
+                how the template engine works in @exalt/core but to preserve SSR/SSG capabilities this is required.
+            */
+
+            /* handle connecting the nodes to the dom */
+            const isComponent = newNode.nodeName.includes("-");
+            const hasProps = (newNode.props != undefined);
+            const hasUnprocessedProps = Object.values(newNode.props ?? {}).includes("{{a}}");
+
+            /* check to ensure we dont connect components with unprocessed props */
+            if(isComponent && (hasProps && !hasUnprocessedProps)) {
+                connectNode(newNode);
+            } else if (!isComponent) {
+                connectNode(newNode);
+            }
         });
     }
 
