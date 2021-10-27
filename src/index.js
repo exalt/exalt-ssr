@@ -92,8 +92,8 @@ function serialize(node, callback) {
     };
 
     /* serialize a node's props into a string that can be parsed later */
-    const serializeProps = (props) => {
-        return `<script type="application/json">${JSON.stringify(props)}</script>`;
+    const serializeProps = (node) => {
+        return `<script id="${node.nodeName}-props" type="application/json">${JSON.stringify(node.props)}</script>`;
     };
 
     /* if a node is a text node, return its text content */
@@ -117,8 +117,7 @@ function serialize(node, callback) {
     /* if the node has props, serialize the props into the markup */
     const hasSerializableProps = (node.props && Object.keys(node.props).filter((name) => !name.startsWith("on")).length > 0);
     if(hasSerializableProps) {
-        console.log(node.nodeName, node.props);
-        str += serializeProps(node.props);
+        str += serializeProps(node);
     }
 
     /* serialize the closing node tag */
