@@ -93,7 +93,7 @@ function serialize(node, callback) {
 
     /* serialize a node's props into a string that can be parsed later */
     const serializeProps = (node) => {
-        return `<script id="${node.nodeName}-props" type="application/json">${JSON.stringify(node.props)}</script>`;
+        return `<script id="props" type="application/json">${JSON.stringify(node.props)}</script>`;
     };
 
     /* if a node is a text node, return its text content */
