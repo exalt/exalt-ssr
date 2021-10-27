@@ -27,7 +27,7 @@ npm install @exalt/ssr
 
 The DOM environment provided is a subset of the DOM spec and is designed to render exalt components,
 however as long as the required apis are provided any web component can be rendered.
-@exalt/ssr also provides access to the fetch api for loading dynamic data on the server.
+@exalt/ssr will detect a components props and serialize them as a script tag in the markup.
 
 When a shadow root is detected it will be rendered as a [declarative shadow root](https://web.dev/declarative-shadow-dom/).
 

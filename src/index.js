@@ -91,6 +91,11 @@ function serialize(node, callback) {
         return childNodes.map((node) => serialize(node, callback)).join("");
     };
 
+    /* serialize a node's props into a string that can be parsed later */
+    const serializeProps = (props) => {
+        return `<script type="application/json">${JSON.stringify(props)}</script>`;
+    };
+
     /* if a node is a text node, return its text content */
     if (node.nodeName == "#text") {
         return node.textContent;
@@ -107,6 +112,13 @@ function serialize(node, callback) {
     /* if the node has any childNodes, serialize them */
     if (node.childNodes) {
         str += serializeChildren(node);
+    }
+
+    /* if the node has props, serialize the props into the markup */
+    const hasSerializableProps = (node.props && Object.keys(node.props).filter((name) => !name.startsWith("on")).length > 0);
+    if(hasSerializableProps) {
+        console.log(node.nodeName, node.props);
+        str += serializeProps(node.props);
     }
 
     /* serialize the closing node tag */
